@@ -37,3 +37,18 @@
     transform: rotate(360deg);
   }
 }
+
+.Book-Title {
+  color: white;
+  font-size: calc(10px + 5vmin);
+}
+
+.Bookmark {
+  color: white;
+  font-size: calc(10px + 2vmin);
+}
+
+.Time-Counter {
+  color: rgb(197, 57, 57);
+  font-size: calc(10px + 10vmin);
+}

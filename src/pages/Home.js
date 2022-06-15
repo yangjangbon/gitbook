@@ -16,7 +16,7 @@ const Home = ()=> {
         <Container>
           <Row>
             <Col>
-              <h1>GIT BOOK</h1>
+              <div className='Book-Title'>GIT BOOK</div>
             </Col>
           </Row>
           <br/>

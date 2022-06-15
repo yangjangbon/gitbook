@@ -40,15 +40,21 @@ const Timer = ()=> {
         <Container>
           <Row>
             <Col>
-              <h1>{title}</h1>
+            <div className='Book-Title'>{title}</div>
             </Col>
           </Row>
           <br/>
           <Row>
             <Col>
-              <h1>
+              <div className='Bookmark'>Bookmark : {}</div>
+            </Col>
+          </Row>
+          <br/>
+          <Row>
+            <Col>
+              <div className='Time-Counter'>
                 {minutes<10? `0${minutes}` : minutes} : {seconds<10? `0${seconds}` : seconds}
-              </h1>
+              </div>
             </Col>
           </Row>
           <br/>
