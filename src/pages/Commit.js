@@ -1,42 +1,37 @@
-import React,{Component} from 'react'
-import {Button, Container, Row, Col,DropdownButton, Dropdown} from 'react-bootstrap';
+import React, { useState } from "react";
+import { Button, Container, Row, Col, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
+const Commit = () => {
+  const [bookTitle, setBookTitle] = useState("Book Title");
 
-function Commit() {
+  function fileSave() {}
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <Container>
-          <Row>
-            <Col>
-              <h1>GIT BOOK</h1>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-            <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-            </DropdownButton>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Button>OK</Button>
-            </Col>
-            <Col>
-              <Button>ADD</Button>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Button>Dashboard</Button>
-            </Col>
-          </Row>
-        </Container>
-      </header>
-    </div>
+    <Container>
+      <Row>
+        <Col>
+          <div className="Book-Title">GIT BOOK</div>
+        </Col>
+      </Row>
+      <br />
+      <Row>
+        <Form className="d-grid gap-2">
+          <Form.Group className="mb-3" controlId="formBasicTitle">
+            <Form.Label>Words read per minute : {}</Form.Label>
+            <br />
+            <br />
+            <Form.Label>Commit Message</Form.Label>
+            <Form.Control as="textarea" rows={10} />
+          </Form.Group>
+          <Link to={{ pathname: "/gitbook" }} className="d-grid gap-2">
+            <Button className="d-grid gap-2" onClick={fileSave}>
+              Commit
+            </Button>
+          </Link>
+        </Form>
+      </Row>
+    </Container>
   );
-}
+};
 
 export default Commit;

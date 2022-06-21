@@ -1,56 +1,94 @@
-import { render } from '@testing-library/react';
-import React,{Component, useState} from 'react';
-import {Button, Container, Row, Col,DropdownButton, Dropdown} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import React, { useState, Component } from "react";
+import {
+  Button,
+  Container,
+  Row,
+  Col,
+  DropdownButton,
+  Dropdown,
+} from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-
-const Home = ()=> {
-  const [bookTitle, setBookTitle] = useState("Book Title");
-  function selectDropDwon(item){
-    setBookTitle(item);
+class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      bookList: ["역행자", "돈키호테", "일리야스"],
+      bookTitle: "-",
+    };
+    this.selectDropDwon = this.selectDropDwon.bind(this);
   }
-  let link = `/timer/${bookTitle}`
-  return (
-    <div className="App">
-      <header className="App-header">
-        <Container>
-          <Row>
-            <Col>
-              <div className='Book-Title'>GIT BOOK</div>
-            </Col>
-          </Row>
-          <br/>
-          <Row>
-            <Col>
-            <DropdownButton id="dropdown-basic-button" title={bookTitle} onSelect={selectDropDwon}>
-              <Dropdown.Item eventKey="book1">book1</Dropdown.Item>
-              <Dropdown.Item eventKey="book2">book2</Dropdown.Item>
-              <Dropdown.Item eventKey="book3">book3</Dropdown.Item>
+  componentDidMount() {
+    fetch("http://localhost:8883/branch", {
+      method: "GET",
+      // "headers": {
+      //   "content-type": "application/json",
+      //   "accept": "application/json"
+      // },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        this.setState({ bookList: response.result });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  selectDropDwon(item) {
+    this.setState({ bookTitle: item });
+  }
+
+  render() {
+    const { bookTitle } = this.state;
+    let timerlink = `/timer/${bookTitle}`;
+    return (
+      <Container>
+        <Row>
+          <Col>
+            <div className="Book-Title">GIT BOOK</div>
+          </Col>
+        </Row>
+        <br />
+        <Row>
+          <Col>
+            <DropdownButton
+              id="dropdown-basic-button"
+              title={bookTitle}
+              onSelect={this.selectDropDwon}
+              className="d-grid gap-2"
+            >
+              {this.state.bookList.map((item) => {
+                return (
+                  <Dropdown.Item key={item} eventKey={item}>
+                    {item}
+                  </Dropdown.Item>
+                );
+              })}
             </DropdownButton>
-            </Col>
-          </Row>
-          <br/>
-          <Row>
-            <Col>
-              <Link to = {{pathname:link}} >
-                <Button>OK</Button>
-              </Link>
-              
-            </Col>
-            <Col>
+          </Col>
+        </Row>
+        <br />
+        <Row>
+          <Col>
+            <Link to={{ pathname: timerlink }} className="d-grid gap-2">
+              <Button>OK</Button>
+            </Link>
+          </Col>
+          <Col>
+            <Link to={{ pathname: "/add" }} className="d-grid gap-2">
               <Button>ADD</Button>
-            </Col>
-          </Row>
-          <br/>
-          <Row>
-            <Col>
-              <Button>Dashboard</Button>
-            </Col>
-          </Row>
-        </Container>
-      </header>
-    </div>
+            </Link>
+          </Col>
+        </Row>
+        <br />
+        {/* <Row>
+          <Col className="d-grid gap-2">
+            <Button>Dashboard</Button>
+          </Col>
+        </Row> */}
+      </Container>
     );
-};
+  }
+}
 
 export default Home;
