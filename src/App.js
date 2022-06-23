@@ -18,10 +18,10 @@ const App = () => {
             <Route path="/add" element={<Add />}>
               {" "}
             </Route>
-            <Route path="/timer/:title" element={<Timer />}>
+            <Route path="/timer/:branchName" element={<Timer />}>
               {" "}
             </Route>
-            <Route path="/commit" element={<Commit />}>
+            <Route path="/commit/:branchName" element={<Commit />}>
               {" "}
             </Route>
           </Routes>

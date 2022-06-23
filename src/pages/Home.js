@@ -14,7 +14,7 @@ class Home extends Component {
     super(props);
     this.state = {
       bookList: ["역행자", "돈키호테", "일리야스"],
-      bookTitle: "-",
+      branchName: "-",
     };
     this.selectDropDwon = this.selectDropDwon.bind(this);
   }
@@ -35,12 +35,12 @@ class Home extends Component {
       });
   }
   selectDropDwon(item) {
-    this.setState({ bookTitle: item });
+    this.setState({ branchName: item });
   }
 
   render() {
-    const { bookTitle } = this.state;
-    let timerlink = `/timer/${bookTitle}`;
+    const { branchName } = this.state;
+    let timerlink = `/timer/${branchName}`;
     return (
       <Container>
         <Row>
@@ -53,7 +53,7 @@ class Home extends Component {
           <Col>
             <DropdownButton
               id="dropdown-basic-button"
-              title={bookTitle}
+              title={branchName}
               onSelect={this.selectDropDwon}
               className="d-grid gap-2"
             >

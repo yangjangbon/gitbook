@@ -8,7 +8,7 @@ function Add() {
   const [inputs, setInputs] = useState({
     bookTitle: "",
     branchName: "",
-    MPP: 100,
+    WPP: 100,
     memo: "",
   });
 
@@ -21,7 +21,7 @@ function Add() {
   };
   const postData = () => {
     const url = "http://localhost:8883/branch";
-    const { bookTitle, branchName, MPP, memo } = inputs;
+    const { bookTitle, branchName } = inputs;
 
     if (bookTitle && branchName) {
       fetch(url, {
@@ -75,7 +75,7 @@ function Add() {
             <Form.Label>Words per page</Form.Label>
             <Col>
               <Form.Control
-                name="MPP"
+                name="WPP"
                 type="text"
                 placeholder="160"
                 onChange={handleChange}
