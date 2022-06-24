@@ -100,16 +100,20 @@ function Add() {
             <br />
             <Form.Label>Words per page : {inputs.WPP}</Form.Label>
             <Row>
-              <Col xs={8}>
+              <Col xs={9}>
                 {/* <Form.Control
                 name="WPP"
                 type="text"
                 placeholder="160"
                 onChange={handleChange}
               /> */}
-                <input type="file" name="file" onChange={changeHandler} />
+                <Form.Control
+                  type="file"
+                  name="file"
+                  onChange={changeHandler}
+                />
               </Col>
-              <Col>
+              <Col xs={3}>
                 <Button disabled={!isFilePicked} onClick={handleSubmission}>
                   send
                 </Button>

@@ -24,8 +24,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.post("/image/:branch", upload.single("file"), (req, res, next) => {
-  const { destination, filename, path } = req.file;
-  const name = req.params.branch;
+  const { path } = req.file;
   let words;
   tesseract
     .recognize(path, config)
