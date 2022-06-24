@@ -5,6 +5,32 @@ import { useNavigate } from "react-router-dom";
 
 function Add() {
   const navigate = useNavigate();
+  const [selectedFile, setSelectedFile] = useState();
+  const [isFilePicked, setIsFilePicked] = useState(false);
+  const changeHandler = (event) => {
+    setSelectedFile(event.target.files[0]);
+    setIsFilePicked(true);
+  };
+  const handleSubmission = () => {
+    const { branchName } = inputs;
+    const url = "http://localhost:8883/image/" + branchName;
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    fetch(url, {
+      method: "POST",
+      body: formData,
+      // headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("Success:", result);
+
+        setInputs({ WPP: result.result.WPP });
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+  };
   const [inputs, setInputs] = useState({
     bookTitle: "",
     branchName: "",
@@ -72,15 +98,23 @@ function Add() {
               />
             </Col>
             <br />
-            <Form.Label>Words per page</Form.Label>
-            <Col>
-              <Form.Control
+            <Form.Label>Words per page : {inputs.WPP}</Form.Label>
+            <Row>
+              <Col xs={8}>
+                {/* <Form.Control
                 name="WPP"
                 type="text"
                 placeholder="160"
                 onChange={handleChange}
-              />
-            </Col>
+              /> */}
+                <input type="file" name="file" onChange={changeHandler} />
+              </Col>
+              <Col>
+                <Button disabled={!isFilePicked} onClick={handleSubmission}>
+                  send
+                </Button>
+              </Col>
+            </Row>
             <br />
             <Form.Label>Memo</Form.Label>
             <Form.Control

@@ -2,16 +2,43 @@ const express = require("express");
 const cors = require("cors");
 const childProcess = require("child_process");
 const fs = require("fs");
+const tesseract = require("node-tesseract-ocr");
 
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
+const multer = require("multer");
 const { pseudoRandomBytes } = require("crypto");
 const { json } = require("body-parser");
 const app = express();
 const port = 8883;
+const upload = multer({
+  dest: __dirname + "/uploads",
+});
+const config = {
+  lang: "kor+eng",
+  oem: 1,
+  psm: 3,
+};
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+
+app.post("/image/:branch", upload.single("file"), (req, res, next) => {
+  const { destination, filename, path } = req.file;
+  const name = req.params.branch;
+  let words;
+  tesseract
+    .recognize(path, config)
+    .then((text) => {
+      words = text.split(" ");
+      console.log(words);
+      res.send({ result: { status: 200, WPP: words.length } });
+    })
+    .catch((error) => {
+      console.log(error.message);
+      res.send({ result: { status: 500, WPP: 100 } });
+    });
+});
 
 app.get("/commit/:branch", (req, res) => {
   childProcess.execSync("git checkout " + req.params.branch, {
