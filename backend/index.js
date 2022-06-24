@@ -24,6 +24,82 @@ app.get("/commit/:branch", (req, res) => {
   res.send({ result: jsonData });
 });
 
+app.post("/merge/:branch", (req, res) => {
+  console.log(req.params.branch);
+  childProcess.execSync("git checkout " + req.params.branch, {
+    cwd: "../brainversion",
+  });
+  console.log(req.params.branch);
+
+  let rawData = fs.readFileSync(
+    "../brainversion/" + req.params.branch + ".json"
+  );
+  let jsonData = JSON.parse(rawData);
+  console.log(jsonData);
+  jsonData.log.push(req.body);
+  console.log(jsonData);
+
+  fs.writeFileSync(
+    "../brainversion/" + req.params.branch + ".json",
+    JSON.stringify(jsonData)
+  );
+
+  childProcess.execSync("git add " + req.params.branch + ".json", {
+    cwd: "../brainversion",
+  });
+  childProcess.execSync("git commit -m '" + req.body.commitMessage + "'", {
+    cwd: "../brainversion",
+  });
+
+  childProcess.execSync("git checkout main", {
+    cwd: "../brainversion",
+  });
+
+  childProcess.execSync("git merge " + req.params.branch, {
+    cwd: "../brainversion",
+  });
+
+  childProcess.execSync("git push origin main", {
+    cwd: "../brainversion",
+  });
+
+  res.send({ result: jsonData });
+});
+
+app.post("/commit/:branch", (req, res) => {
+  console.log(req.params.branch);
+  childProcess.execSync("git checkout " + req.params.branch, {
+    cwd: "../brainversion",
+  });
+  console.log(req.params.branch);
+
+  let rawData = fs.readFileSync(
+    "../brainversion/" + req.params.branch + ".json"
+  );
+  let jsonData = JSON.parse(rawData);
+  console.log(jsonData);
+  jsonData.log.push(req.body);
+  console.log(jsonData);
+
+  fs.writeFileSync(
+    "../brainversion/" + req.params.branch + ".json",
+    JSON.stringify(jsonData)
+  );
+
+  childProcess.execSync("git add " + req.params.branch + ".json", {
+    cwd: "../brainversion",
+  });
+  childProcess.execSync("git commit -m '" + req.body.commitMessage + "'", {
+    cwd: "../brainversion",
+  });
+
+  childProcess.execSync("git push origin " + req.params.branch, {
+    cwd: "../brainversion",
+  });
+
+  res.send({ result: jsonData });
+});
+
 app.get("/branch", (req, res) => {
   childProcess.execSync("cd ../brainversion && git checkout main");
   const branchCommand = childProcess
@@ -50,7 +126,7 @@ app.post("/branch", (req, res) => {
     WPP: req.body.WPP,
     memo: req.body.memo,
     branchName: req.body.branchName,
-    log: [{ start: 1, end: 1, message: "Create Branch" }],
+    log: [{ start: 1, end: 1, commitMessage: "Create Branch" }],
   };
 
   var jsonData = JSON.stringify(data);

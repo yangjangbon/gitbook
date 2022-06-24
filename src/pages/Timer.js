@@ -48,7 +48,7 @@ const Timer = () => {
     const { start, end } = inputs;
     let min = (MIN * 60 - (minutes * 60 + seconds)) / 60;
     let WPM = ((end - start + 1) * WPP) / min;
-    navigate("/commit/" + branchName, { state: { WPM } });
+    navigate("/commit/" + branchName, { state: { WPM, start, end } });
   };
   const timerReset = () => {
     setStarted(false);

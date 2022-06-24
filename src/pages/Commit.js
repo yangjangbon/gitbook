@@ -1,13 +1,66 @@
 import React, { useState } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 const Commit = () => {
-  const [bookTitle, setBookTitle] = useState("Book Title");
+  const navigate = useNavigate();
+  const { branchName } = useParams();
   const location = useLocation();
   const WPM = location.state.WPM;
+  const start = location.state.start;
+  const end = location.state.end;
   console.log(WPM);
-  function fileSave() {}
+  const [inputs, setInputs] = useState({
+    commitMessage: "",
+    WPM: WPM,
+    start: start,
+    end: end,
+  });
+  const handleChange = (e) => {
+    const { value, name } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
+  const postCommit = () => {
+    const url = "http://localhost:8883/commit/" + branchName;
 
+    fetch(url, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, cors, *same-origin
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(inputs), // body data type must match "Content-Type" header
+    })
+      .then((response) => response.json()) // parses JSON response into native JavaScript objects
+      .then((data) => {
+        if (data.result.status == 200) {
+          navigate("/gitbook");
+        }
+      }) // JSON-string from `response.json()` call
+      .catch((error) => console.error(error));
+  };
+
+  const postMerge = () => {
+    const url = "http://localhost:8883/merge/" + branchName;
+
+    fetch(url, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, cors, *same-origin
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(inputs), // body data type must match "Content-Type" header
+    })
+      .then((response) => response.json()) // parses JSON response into native JavaScript objects
+      .then((data) => {
+        if (data.result.status == 200) {
+          navigate("/gitbook");
+        }
+      }) // JSON-string from `response.json()` call
+      .catch((error) => console.error(error));
+  };
   return (
     <Container>
       <Row>
@@ -23,17 +76,22 @@ const Commit = () => {
             <br />
             <br />
             <Form.Label>Commit Message</Form.Label>
-            <Form.Control as="textarea" rows={10} />
+            <Form.Control
+              onChange={handleChange}
+              name="commitMessage"
+              as="textarea"
+              rows={10}
+            />
           </Form.Group>
           <Link to={{ pathname: "/gitbook" }} className="d-grid gap-2">
             <Row>
               <Col className="d-grid gap-2">
-                <Button className="d-grid gap-2" onClick={fileSave}>
+                <Button className="d-grid gap-2" onClick={postCommit}>
                   Commit
                 </Button>
               </Col>
               <Col className="d-grid gap-2">
-                <Button className="d-grid gap-2" onClick={fileSave}>
+                <Button className="d-grid gap-2" onClick={postMerge}>
                   Merge
                 </Button>
               </Col>
