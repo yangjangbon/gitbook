@@ -19,7 +19,7 @@ class Home extends Component {
     this.selectDropDwon = this.selectDropDwon.bind(this);
   }
   componentDidMount() {
-    fetch("http://localhost:8883/branch", {
+    fetch("http://34.64.244.165:8883/branch", {
       method: "GET",
       // "headers": {
       //   "content-type": "application/json",

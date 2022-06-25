@@ -20,7 +20,7 @@ const Timer = () => {
     setStarted(!started);
   };
   const deleteData = () => {
-    const url = "http://localhost:8883/branch";
+    const url = "http://34.64.244.165:8883/branch";
     fetch(url, {
       method: "DELETE", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, cors, *same-origin
@@ -56,7 +56,7 @@ const Timer = () => {
     setSeconds(parseInt(0));
   };
   useEffect(() => {
-    fetch("http://localhost:8883/commit/" + branchName, {
+    fetch("http://34.64.244.165:8883/commit/" + branchName, {
       method: "GET",
     })
       .then((response) => response.json())

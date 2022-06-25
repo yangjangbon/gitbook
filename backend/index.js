@@ -24,6 +24,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.post("/image/:branch", upload.single("file"), (req, res, next) => {
+  console.log("image/:branch post");
   const { path } = req.file;
   let words;
   tesseract
@@ -40,6 +41,7 @@ app.post("/image/:branch", upload.single("file"), (req, res, next) => {
 });
 
 app.get("/commit/:branch", (req, res) => {
+  console.log("commit/:branch get");
   childProcess.execSync("git checkout " + req.params.branch, {
     cwd: "../brainversion",
   });
@@ -51,12 +53,10 @@ app.get("/commit/:branch", (req, res) => {
 });
 
 app.post("/merge/:branch", (req, res) => {
-  console.log(req.params.branch);
+  console.log("merge/:branch post");
   childProcess.execSync("git checkout " + req.params.branch, {
     cwd: "../brainversion",
   });
-  console.log(req.params.branch);
-
   let rawData = fs.readFileSync(
     "../brainversion/" + req.params.branch + ".json"
   );
@@ -93,12 +93,10 @@ app.post("/merge/:branch", (req, res) => {
 });
 
 app.post("/commit/:branch", (req, res) => {
-  console.log(req.params.branch);
+  console.log("commit/:branch post");
   childProcess.execSync("git checkout " + req.params.branch, {
     cwd: "../brainversion",
   });
-  console.log(req.params.branch);
-
   let rawData = fs.readFileSync(
     "../brainversion/" + req.params.branch + ".json"
   );
@@ -127,6 +125,7 @@ app.post("/commit/:branch", (req, res) => {
 });
 
 app.get("/branch", (req, res) => {
+  console.log("branch get");
   childProcess.execSync("cd ../brainversion && git checkout main");
   const branchCommand = childProcess
     .execSync("cd ../brainversion && git branch")
@@ -142,6 +141,7 @@ app.get("/branch", (req, res) => {
 });
 
 app.post("/branch", (req, res) => {
+  console.log("branch post");
   console.log(req.body);
   childProcess.execSync("git checkout -b " + req.body.branchName, {
     cwd: "../brainversion",
@@ -180,6 +180,7 @@ app.post("/branch", (req, res) => {
 });
 
 app.delete("/branch", (req, res) => {
+  console.log("branch delete");
   childProcess.execSync("git checkout " + req.body.branchName, {
     cwd: "../brainversion",
   });

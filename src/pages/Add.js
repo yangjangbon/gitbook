@@ -12,8 +12,9 @@ function Add() {
     setIsFilePicked(true);
   };
   const handleSubmission = () => {
+    console.log("submit");
     const { branchName } = inputs;
-    const url = "http://localhost:8883/image/" + branchName;
+    const url = "http://34.64.244.165:8883/image/" + branchName;
     const formData = new FormData();
     formData.append("file", selectedFile);
     fetch(url, {
@@ -25,7 +26,7 @@ function Add() {
       .then((result) => {
         console.log("Success:", result);
 
-        setInputs({ WPP: result.result.WPP });
+        setInputs({ ...inputs, WPP: result.result.WPP });
       })
       .catch((error) => {
         console.log("Error:", error);
@@ -46,10 +47,13 @@ function Add() {
     });
   };
   const postData = () => {
-    const url = "http://localhost:8883/branch";
+    console.log("post");
+    const url = "http://34.64.244.165:8883/branch";
     const { bookTitle, branchName } = inputs;
 
     if (bookTitle && branchName) {
+      console.log(bookTitle);
+      console.log(branchName);
       fetch(url, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, cors, *same-origin
