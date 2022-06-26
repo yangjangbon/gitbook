@@ -35,7 +35,7 @@ const Commit = () => {
     })
       .then((response) => response.json()) // parses JSON response into native JavaScript objects
       .then((data) => {
-        if (data.result.status == 200) {
+        if (data.result.status === 200) {
           navigate("/gitbook");
         }
       }) // JSON-string from `response.json()` call
@@ -55,7 +55,7 @@ const Commit = () => {
     })
       .then((response) => response.json()) // parses JSON response into native JavaScript objects
       .then((data) => {
-        if (data.result.status == 200) {
+        if (data.result.status === 200) {
           navigate("/gitbook");
         }
       }) // JSON-string from `response.json()` call

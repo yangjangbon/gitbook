@@ -1,4 +1,3 @@
-import { render } from "@testing-library/react";
 import React, { useState } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -64,7 +63,7 @@ function Add() {
       })
         .then((response) => response.json()) // parses JSON response into native JavaScript objects
         .then((data) => {
-          if (data.result.status == 200) {
+          if (data.result.status === 200) {
             navigate("/gitbook");
           }
         }) // JSON-string from `response.json()` call

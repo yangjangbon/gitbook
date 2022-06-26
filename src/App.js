@@ -12,7 +12,7 @@ const App = () => {
       <header className="App-header">
         <BrowserRouter>
           <Routes>
-            <Route path="/gitbook" element={<Home />}>
+            <Route path="/" element={<Home />}>
               {" "}
             </Route>
             <Route path="/add" element={<Add />}>
