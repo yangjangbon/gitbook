@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import BarLoader from "react-spinners/BarLoader";
+
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "95fc9f",
+};
 
 function Add() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
   const changeHandler = (event) => {
@@ -12,6 +20,7 @@ function Add() {
   };
   const handleSubmission = () => {
     console.log("submit");
+    setLoading(true);
     const { branchName } = inputs;
     const url = "http://34.64.244.165:8883/image/" + branchName;
     const formData = new FormData();
@@ -24,17 +33,18 @@ function Add() {
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);
-
+        setLoading(false);
         setInputs({ ...inputs, WPP: result.result.WPP });
       })
       .catch((error) => {
+        setLoading(false);
         console.log("Error:", error);
       });
   };
   const [inputs, setInputs] = useState({
     bookTitle: "",
     branchName: "",
-    WPP: 100,
+    WPP: 0,
     memo: "",
   });
 
@@ -64,7 +74,7 @@ function Add() {
         .then((response) => response.json()) // parses JSON response into native JavaScript objects
         .then((data) => {
           if (data.result.status === 200) {
-            navigate("/gitbook");
+            navigate("/");
           }
         }) // JSON-string from `response.json()` call
         .catch((error) => console.error(error));
@@ -101,7 +111,7 @@ function Add() {
               />
             </Col>
             <br />
-            <Form.Label>Words per page : {inputs.WPP}</Form.Label>
+            <Form.Label>Words per page :{inputs.WPP}</Form.Label>
             <Row>
               <Col xs={9}>
                 {/* <Form.Control
@@ -122,6 +132,18 @@ function Add() {
                 </Button>
               </Col>
             </Row>
+            <br />
+            {loading ? (
+              <BarLoader
+                color="#95fc9f"
+                loading={loading}
+                cssOverride={override}
+                size={150}
+              />
+            ) : (
+              ""
+            )}
+
             <br />
             <Form.Label>Memo</Form.Label>
             <Form.Control

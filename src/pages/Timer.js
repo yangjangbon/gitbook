@@ -31,7 +31,7 @@ const Timer = () => {
       .then((response) => response.json()) // parses JSON response into native JavaScript objects
       .then((data) => {
         if (data.result.status === 200) {
-          navigate("/gitbook");
+          navigate("/");
         }
       }) // JSON-string from `response.json()` call
       .catch((error) => console.error(error));

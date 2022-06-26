@@ -32,7 +32,14 @@ app.post("/image/:branch", upload.single("file"), (req, res, next) => {
     .then((text) => {
       words = text.split(" ");
       console.log(words);
-      res.send({ result: { status: 200, WPP: words.length } });
+      wordsList = [];
+      for (item of words) {
+        if (item != "") {
+          wordsList.push(item);
+        }
+      }
+      console.log(wordsList);
+      res.send({ result: { status: 200, WPP: wordsList.length } });
     })
     .catch((error) => {
       console.log(error.message);

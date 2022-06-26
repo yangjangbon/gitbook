@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
-import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 const Commit = () => {
   const navigate = useNavigate();
   const { branchName } = useParams();
@@ -36,7 +36,7 @@ const Commit = () => {
       .then((response) => response.json()) // parses JSON response into native JavaScript objects
       .then((data) => {
         if (data.result.status === 200) {
-          navigate("/gitbook");
+          navigate("/");
         }
       }) // JSON-string from `response.json()` call
       .catch((error) => console.error(error));
@@ -56,7 +56,7 @@ const Commit = () => {
       .then((response) => response.json()) // parses JSON response into native JavaScript objects
       .then((data) => {
         if (data.result.status === 200) {
-          navigate("/gitbook");
+          navigate("/");
         }
       }) // JSON-string from `response.json()` call
       .catch((error) => console.error(error));
@@ -83,20 +83,19 @@ const Commit = () => {
               rows={10}
             />
           </Form.Group>
-          <Link to={{ pathname: "/gitbook" }} className="d-grid gap-2">
-            <Row>
-              <Col className="d-grid gap-2">
-                <Button className="d-grid gap-2" onClick={postCommit}>
-                  Commit
-                </Button>
-              </Col>
-              <Col className="d-grid gap-2">
-                <Button className="d-grid gap-2" onClick={postMerge}>
-                  Merge
-                </Button>
-              </Col>
-            </Row>
-          </Link>
+
+          <Row>
+            <Col className="d-grid gap-2">
+              <Button className="d-grid gap-2" onClick={postCommit}>
+                Commit
+              </Button>
+            </Col>
+            <Col className="d-grid gap-2">
+              <Button className="d-grid gap-2" onClick={postMerge}>
+                Merge
+              </Button>
+            </Col>
+          </Row>
         </Form>
       </Row>
     </Container>
