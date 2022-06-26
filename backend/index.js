@@ -56,7 +56,7 @@ app.get("/commit/:branch", (req, res) => {
     "../brainversion/" + req.params.branch + ".json"
   );
   let jsonData = JSON.parse(rawData);
-  res.send({ result: jsonData });
+  res.send({ result: { status: 200 }, jsonData });
 });
 
 app.post("/merge/:branch", (req, res) => {
@@ -96,7 +96,7 @@ app.post("/merge/:branch", (req, res) => {
     cwd: "../brainversion",
   });
 
-  res.send({ result: jsonData });
+  res.send({ result: { status: 200 }, jsonData });
 });
 
 app.post("/commit/:branch", (req, res) => {
