@@ -8,7 +8,6 @@ const Commit = () => {
   const WPM = location.state.WPM;
   const start = location.state.start;
   const end = location.state.end;
-  console.log(WPM);
   const [inputs, setInputs] = useState({
     commitMessage: "",
     WPM: WPM,
@@ -35,9 +34,7 @@ const Commit = () => {
     })
       .then((response) => response.json()) // parses JSON response into native JavaScript objects
       .then((data) => {
-        if (data.result.status === 200) {
-          navigate("/");
-        }
+        navigate("/");
       }) // JSON-string from `response.json()` call
       .catch((error) => console.error(error));
   };
@@ -55,9 +52,7 @@ const Commit = () => {
     })
       .then((response) => response.json()) // parses JSON response into native JavaScript objects
       .then((data) => {
-        if (data.result.status === 200) {
-          navigate("/");
-        }
+        navigate("/");
       }) // JSON-string from `response.json()` call
       .catch((error) => console.error(error));
   };
@@ -83,7 +78,7 @@ const Commit = () => {
               rows={10}
             />
           </Form.Group>
-
+          {/* <Link to={{ pathname: "/" }} className="d-grid gap-2"> */}
           <Row>
             <Col className="d-grid gap-2">
               <Button className="d-grid gap-2" onClick={postCommit}>
@@ -96,6 +91,7 @@ const Commit = () => {
               </Button>
             </Col>
           </Row>
+          {/* </Link> */}
         </Form>
       </Row>
     </Container>
