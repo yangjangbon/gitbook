@@ -10,6 +10,7 @@ const override = {
 };
 
 function Add() {
+  const backurl = "34.64.173.117:8883";
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
@@ -22,7 +23,7 @@ function Add() {
     console.log("submit");
     setLoading(true);
     const { branchName } = inputs;
-    const url = "http://34.64.244.165:8883/image/" + branchName;
+    const url = "http://" + backurl + "/image/" + branchName;
     const formData = new FormData();
     formData.append("file", selectedFile);
     fetch(url, {
@@ -57,7 +58,7 @@ function Add() {
   };
   const postData = () => {
     console.log("post");
-    const url = "http://34.64.244.165:8883/branch";
+    const url = "http://" + backurl + "/branch";
     const { bookTitle, branchName } = inputs;
 
     if (bookTitle && branchName) {

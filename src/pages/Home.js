@@ -9,6 +9,8 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+const backurl = "34.64.173.117:8883";
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +21,7 @@ class Home extends Component {
     this.selectDropDwon = this.selectDropDwon.bind(this);
   }
   componentDidMount() {
-    fetch("http://34.64.244.165:8883/branch", {
+    fetch("http://" + backurl + "/branch", {
       method: "GET",
       // "headers": {
       //   "content-type": "application/json",

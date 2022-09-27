@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 const Commit = () => {
+  const backurl = "34.64.173.117:8883";
   const navigate = useNavigate();
   const { branchName } = useParams();
   const location = useLocation();
@@ -22,7 +23,7 @@ const Commit = () => {
     });
   };
   const postCommit = () => {
-    const url = "http://34.64.244.165:8883/commit/" + branchName;
+    const url = "http://" + backurl + "/commit/" + branchName;
 
     fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -40,7 +41,7 @@ const Commit = () => {
   };
 
   const postMerge = () => {
-    const url = "http://34.64.244.165:8883/merge/" + branchName;
+    const url = "http://" + backurl + "/merge/" + branchName;
 
     fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.

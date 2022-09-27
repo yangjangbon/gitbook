@@ -3,6 +3,7 @@ import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Timer = () => {
+  const backurl = "34.64.173.117:8883";
   const MIN = 25;
   const navigate = useNavigate();
   const { branchName } = useParams();
@@ -15,11 +16,12 @@ const Timer = () => {
     start: 1,
     end: 1,
   });
+
   const timerStart = () => {
     setStarted(!started);
   };
   const deleteData = () => {
-    const url = "http://34.64.244.165:8883/branch";
+    const url = "http://" + backurl + "/branch";
     fetch(url, {
       method: "DELETE", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, cors, *same-origin
@@ -55,7 +57,7 @@ const Timer = () => {
     setSeconds(parseInt(0));
   };
   useEffect(() => {
-    fetch("http://34.64.244.165:8883/commit/" + branchName, {
+    fetch("http://" + backurl + "/commit/" + branchName, {
       method: "GET",
     })
       .then((response) => response.json())
