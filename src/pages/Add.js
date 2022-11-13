@@ -22,7 +22,7 @@ function Add() {
     console.log("submit");
     setLoading(true);
     const { branchName } = inputs;
-    const url = "http://34.64.244.165:8883/image/" + branchName;
+    const url = "/image/" + branchName;
     const formData = new FormData();
     formData.append("file", selectedFile);
     fetch(url, {
@@ -57,7 +57,7 @@ function Add() {
   };
   const postData = () => {
     console.log("post");
-    const url = "http://34.64.244.165:8883/branch";
+    const url = "/branch";
     const { bookTitle, branchName } = inputs;
 
     if (bookTitle && branchName) {

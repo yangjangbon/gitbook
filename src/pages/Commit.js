@@ -22,7 +22,7 @@ const Commit = () => {
     });
   };
   const postCommit = () => {
-    const url = "http://34.64.244.165:8883/commit/" + branchName;
+    const url = "/commit/" + branchName;
 
     fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -40,7 +40,7 @@ const Commit = () => {
   };
 
   const postMerge = () => {
-    const url = "http://34.64.244.165:8883/merge/" + branchName;
+    const url = "/merge/" + branchName;
 
     fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.

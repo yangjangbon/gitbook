@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const childProcess = require("child_process");
 const fs = require("fs");
 const tesseract = require("node-tesseract-ocr");
@@ -19,9 +20,18 @@ const config = {
   psm: 3,
 };
 
+const http = require("http").createServer(app);
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+
+app.use(express.static(path.join(__dirname, "/build")));
+
+app.get("/", (res, req) => {
+  console.log("get /");
+  req.sendFile(path.join(__dirname, "/build/index.html"));
+});
 
 app.post("/image/:branch", upload.single("file"), (req, res, next) => {
   console.log("image/:branch post");
@@ -210,6 +220,6 @@ app.delete("/branch", (req, res) => {
   res.send({ result: { status: 200 } });
 });
 
-app.listen(port, () => {
+http.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
