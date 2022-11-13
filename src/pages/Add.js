@@ -10,6 +10,7 @@ const override = {
 };
 
 function Add() {
+  const backurl = "34.64.173.117:8883";
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
@@ -22,6 +23,7 @@ function Add() {
     console.log("submit");
     setLoading(true);
     const { branchName } = inputs;
+
     const url = "/image/" + branchName;
     const formData = new FormData();
     formData.append("file", selectedFile);

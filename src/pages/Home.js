@@ -9,6 +9,8 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+const backurl = "34.64.173.117:8883";
+
 class Home extends Component {
   constructor(props) {
     super(props);

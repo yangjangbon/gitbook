@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 const Commit = () => {
+  const backurl = "34.64.173.117:8883";
   const navigate = useNavigate();
   const { branchName } = useParams();
   const location = useLocation();
@@ -23,7 +24,6 @@ const Commit = () => {
   };
   const postCommit = () => {
     const url = "/commit/" + branchName;
-
     fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, cors, *same-origin
@@ -41,7 +41,6 @@ const Commit = () => {
 
   const postMerge = () => {
     const url = "/merge/" + branchName;
-
     fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, cors, *same-origin
