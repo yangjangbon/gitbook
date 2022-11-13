@@ -28,13 +28,8 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, "/build")));
 
-app.get("/", (res, req) => {
-  console.log("get /");
-  req.sendFile(path.join(__dirname, "/build/index.html"));
-});
-
 app.post("/image/:branch", upload.single("file"), (req, res, next) => {
-  console.log("image/:branch post");
+  console.log("image/" + req.params.branch + " post");
   const { path } = req.file;
   let words;
   tesseract
@@ -58,7 +53,7 @@ app.post("/image/:branch", upload.single("file"), (req, res, next) => {
 });
 
 app.get("/commit/:branch", (req, res) => {
-  console.log("commit/:branch get");
+  console.log("commit/" + req.params.branch + " get");
   childProcess.execSync("git checkout " + req.params.branch, {
     cwd: "../brainversion",
   });
@@ -70,7 +65,7 @@ app.get("/commit/:branch", (req, res) => {
 });
 
 app.post("/merge/:branch", (req, res) => {
-  console.log("merge/:branch post");
+  console.log("merge/" + req.params.branch + " post");
   childProcess.execSync("git checkout " + req.params.branch, {
     cwd: "../brainversion",
   });
@@ -110,7 +105,7 @@ app.post("/merge/:branch", (req, res) => {
 });
 
 app.post("/commit/:branch", (req, res) => {
-  console.log("commit/:branch post");
+  console.log("commit/" + req.params.branch + " post");
   childProcess.execSync("git checkout " + req.params.branch, {
     cwd: "../brainversion",
   });
@@ -218,6 +213,11 @@ app.delete("/branch", (req, res) => {
   );
 
   res.send({ result: { status: 200 } });
+});
+
+app.get("/", (res, req) => {
+  console.log("get /");
+  req.sendFile(path.join(__dirname, "/build/index.html"));
 });
 
 http.listen(port, () => {
