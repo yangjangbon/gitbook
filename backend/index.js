@@ -10,7 +10,7 @@ const multer = require("multer");
 const { pseudoRandomBytes } = require("crypto");
 const { json } = require("body-parser");
 const app = express();
-const port = 8883;
+const port = 80;
 const upload = multer({
   dest: __dirname + "/uploads",
 });
@@ -54,14 +54,16 @@ app.post("/image/:branch", upload.single("file"), (req, res, next) => {
 
 app.get("/commit/:branch", (req, res) => {
   console.log("commit/" + req.params.branch + " get");
-  childProcess.execSync("git checkout " + req.params.branch, {
-    cwd: "../brainversion",
-  });
-  let rawData = fs.readFileSync(
-    "../brainversion/" + req.params.branch + ".json"
-  );
-  let jsonData = JSON.parse(rawData);
-  res.send({ result: jsonData });
+  if (req.params.branch != "favicon.ico") {
+    childProcess.execSync("git checkout " + req.params.branch, {
+      cwd: "../brainversion",
+    });
+    let rawData = fs.readFileSync(
+      "../brainversion/" + req.params.branch + ".json"
+    );
+    let jsonData = JSON.parse(rawData);
+    res.send({ result: jsonData });
+  }
 });
 
 app.post("/merge/:branch", (req, res) => {
